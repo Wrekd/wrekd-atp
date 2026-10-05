@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ATP - Drone Acceptance Test Procedure</title>
+  <style>
+    :root {
+      --primary: #1a1a2e;
+      --accent: #e94560;
+      --success: #00b894;
+      --warning: #fdcb6e;
+      --danger: #d63031;
+      --bg: #f8f9fa;
+      --card: #ffffff;
+      --text: #2d3436;
+      --muted: #636e72;
+      --border: #dfe6e9;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    
+    header {
+      background: var(--primary);
+      color: white;
+      padding: 30px;
+      border-radius: 12px 12px 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    header h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+    
+    header .subtitle {
+      opacity: 0.8;
+      font-size: 0.95rem;
+      margin-top: 4px;
+    }
+    
+    .logo {
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--accent);
+    }
+    
+    .meta-section {
+      background: var(--card);
+      padding: 24px 30px;
+      border-bottom: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+    
+    .meta-field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    
+    .meta-field label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    
+    .meta-field input {
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 1rem;
+      transition: border-color 0.2s;
+    }
+    
+    .meta-field input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    
+    .test-section {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .section-header {
+      padding: 16px 30px;
+      background: linear-gradient(135deg, var(--primary) 0%, #16213e 100%);
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .section-header h2 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .section-number {
+      background: var(--accent);
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+    
+    .section-status {
+      font-size: 0.8rem;
+      padding: 4px 12px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.2);
+    }
+    
+    .section-status.pass {
+      background: var(--success);
+    }
+    
+    .section-status.fail {
+      background: var(--danger);
+    }
+    
+    .test-items {
+      padding: 0;
+    }
+    
+    .test-item {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 16px;
+      padding: 16px 30px;
+      border-bottom: 1px solid var(--border);
+      align-items: center;
+    }
+    
+    .test-item:last-child {
+      border-bottom: none;
+    }
+    
+    .test-item:hover {
+      background: #f8f9fa;
+    }
+    
+    .test-description {
+      font-size: 0.95rem;
+    }
+    
+    .test-controls {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .btn-check {
+      width: 36px;
+      height: 36px;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      background: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      transition: all 0.2s;
+    }
+    
+    .btn-check:hover {
+      border-color: var(--muted);
+    }
+    
+    .btn-check.pass {
+      background: var(--success);
+      border-color: var(--success);
+      color: white;
+    }
+    
+    .btn-check.fail {
+      background: var(--danger);
+      border-color: var(--danger);
+      color: white;
+    }
+    
+    .notes-input {
+      width: 180px;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.85rem;
+    }
+    
+    .notes-input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    
+    .warning-banner {
+      background: linear-gradient(135deg, var(--warning) 0%, #f39c12 100%);
+      color: var(--primary);
+      padding: 12px 30px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .warning-banner::before {
+      content: "⚠️";
+    }
+    
+    .summary-section {
+      background: var(--card);
+      padding: 30px;
+      border-radius: 0 0 12px 12px;
+    }
+    
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    
+    .summary-card {
+      text-align: center;
+      padding: 20px;
+      border-radius: 10px;
+      background: var(--bg);
+    }
+    
+    .summary-card.total {
+      border: 2px solid var(--primary);
+    }
+    
+    .summary-card.passed {
+      border: 2px solid var(--success);
+    }
+    
+    .summary-card.failed {
+      border: 2px solid var(--danger);
+    }
+    
+    .summary-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+    
+    .summary-card.passed .summary-number {
+      color: var(--success);
+    }
+    
+    .summary-card.failed .summary-number {
+      color: var(--danger);
+    }
+    
+    .summary-label {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .final-result {
+      text-align: center;
+      padding: 24px;
+      border-radius: 10px;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+    
+    .final-result.pending {
+      background: var(--bg);
+      color: var(--muted);
+    }
+    
+    .final-result.pass {
+      background: linear-gradient(135deg, var(--success) 0%, #00a884 100%);
+      color: white;
+    }
+    
+    .final-result.fail {
+      background: linear-gradient(135deg, var(--danger) 0%, #c0392b 100%);
+      color: white;
+    }
+    
+    .signature-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+    
+    .signature-box {
+      text-align: center;
+    }
+    
+    .signature-line {
+      border-bottom: 2px solid var(--text);
+      height: 50px;
+      margin-bottom: 8px;
+    }
+    
+    .signature-label {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    
+    .print-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 30px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(233, 69, 96, 0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .print-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(233, 69, 96, 0.5);
+    }
+    
+    @media print {
+      body {
+        padding: 0;
+        background: white;
+      }
+      
+      .print-btn {
+        display: none;
+      }
+      
+      .container {
+        max-width: 100%;
+      }
+      
+      header {
+        border-radius: 0;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      
+      .section-header {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      
+      .btn-check {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      
+      .summary-section {
+        border-radius: 0;
+      }
+      
+      .test-section {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <h1>Acceptance Test Procedure</h1>
+        <div class="subtitle">FPV Drone Pre-Delivery Verification</div>
+      </div>
+      <div class="logo">WREKD</div>
+    </header>
+    
+    <div class="meta-section">
+      <div class="meta-field">
+        <label>Unit Serial #</label>
+        <input type="text" id="serial" placeholder="e.g., WRK-2026-0001">
+      </div>
+      <div class="meta-field">
+        <label>Inspector Name</label>
+        <input type="text" id="inspector" placeholder="Enter name">
+      </div>
+      <div class="meta-field">
+        <label>Date</label>
+        <input type="date" id="date">
+      </div>
+      <div class="meta-field">
+        <label>Build/Order Reference</label>
+        <input type="text" id="reference" placeholder="e.g., ORD-12345">
+      </div>
+    </div>
+    
+    <!-- Section 1: Unboxing Inspection -->
+    <div class="test-section" data-section="1">
+      <div class="section-header">
+        <h2><span class="section-number">1</span> Unboxing Inspection</h2>
+        <span class="section-status" data-status></span>
+      </div>
+      <div class="test-items">
+        <div class="test-item">
+          <div class="test-description">Packaging intact, no crushing or water damage</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">All items present per packing list</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">No visible damage to airframe</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">Props included and undamaged</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+      </div>
+    </div>
+    
+    <!-- Section 2: Visual Inspection -->
+    <div class="test-section" data-section="2">
+      <div class="section-header">
+        <h2><span class="section-number">2</span> Visual Inspection (No Power)</h2>
+        <span class="section-status" data-status></span>
+      </div>
+      <div class="test-items">
+        <div class="test-item">
+          <div class="test-description">Frame arms secure, no cracks</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">Motors spin freely by hand, no grinding</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">Motor screws tight</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">ESC/FC stack secure</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">Antenna connections secure (VTX, RX)</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">Camera mounted securely, lens clean</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">Battery strap/pad in place</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">XT60/XT30 connector undamaged</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+      </div>
+    </div>
+    
+    <!-- Section 3: Power-On Test -->
+    <div class="test-section" data-section="3">
+      <div class="section-header">
+        <h2><span class="section-number">3</span> Power-On Test (Props OFF)</h2>
+        <span class="section-status" data-status></span>
+      </div>
+      <div class="warning-banner">Remove all propellers before this test</div>
+      <div class="test-items">
+        <div class="test-item">
+          <div class="test-description">Connect battery, listen for startup tones</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">No smoke, burning smell, or sparks</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">LEDs indicate normal status</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">VTX powers on (check with goggles)</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">Camera image visible in goggles</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">OSD displays correctly (battery voltage, etc.)</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+      </div>
+    </div>
+    
+    <!-- Section 4: Radio Link Test -->
+    <div class="test-section" data-section="4">
+      <div class="section-header">
+        <h2><span class="section-number">4</span> Radio Link Test (Props OFF)</h2>
+        <span class="section-status" data-status></span>
+      </div>
+      <div class="test-items">
+        <div class="test-item">
+          <div class="test-description">Receiver binds to transmitter</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">Stick inputs respond in Betaflight/OSD</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">All channels mapped correctly</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">Failsafe triggers when TX powered off</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">RSSI displays in OSD</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+      </div>
+    </div>
+    
+    <!-- Section 5: Motor Test -->
+    <div class="test-section" data-section="5">
+      <div class="section-header">
+        <h2><span class="section-number">5</span> Motor Test (Props OFF)</h2>
+        <span class="section-status" data-status></span>
+      </div>
+      <div class="warning-banner">Secure drone to bench or hold firmly - motors will spin</div>
+      <div class="test-items">
+        <div class="test-item">
+          <div class="test-description">Motor 1 (front-left) spins CCW</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">Motor 2 (front-right) spins CW</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">Motor 3 (rear-left) spins CW</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">Motor 4 (rear-right) spins CCW</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">No abnormal vibration or noise</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">Motors stop cleanly (no cogging)</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+      </div>
+    </div>
+    
+    <!-- Section 6: Arming Test -->
+    <div class="test-section" data-section="6">
+      <div class="section-header">
+        <h2><span class="section-number">6</span> Arming Test (Props OFF)</h2>
+        <span class="section-status" data-status></span>
+      </div>
+      <div class="test-items">
+        <div class="test-item">
+          <div class="test-description">Arm switch/stick arms the drone</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">Motors spin at idle when armed</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">Disarm stops motors immediately</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">Arm blocked if throttle not at zero</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+      </div>
+    </div>
+    
+    <!-- Section 7: Prop Installation -->
+    <div class="test-section" data-section="7">
+      <div class="section-header">
+        <h2><span class="section-number">7</span> Propeller Installation</h2>
+        <span class="section-status" data-status></span>
+      </div>
+      <div class="test-items">
+        <div class="test-item">
+          <div class="test-description">Props matched to correct motors (CW/CCW)</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">Props fully seated and secured</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">No prop damage (chips, cracks)</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">Props clear frame when spinning</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+      </div>
+    </div>
+    
+    <!-- Section 8: Hover Test -->
+    <div class="test-section" data-section="8">
+      <div class="section-header">
+        <h2><span class="section-number">8</span> Hover Test (Outdoors)</h2>
+        <span class="section-status" data-status></span>
+      </div>
+      <div class="warning-banner">Open area, low wind, no people nearby</div>
+      <div class="test-items">
+        <div class="test-item">
+          <div class="test-description">Drone lifts off smoothly</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">Stable hover at 2m altitude</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">No oscillations or toilet-bowling</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">Responds correctly to pitch/roll/yaw</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">Throttle response linear</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">Lands without issues</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+      </div>
+    </div>
+    
+    <!-- Section 9: FPV System Flight Test -->
+    <div class="test-section" data-section="9">
+      <div class="section-header">
+        <h2><span class="section-number">9</span> FPV System Flight Test</h2>
+        <span class="section-status" data-status></span>
+      </div>
+      <div class="test-items">
+        <div class="test-item">
+          <div class="test-description">Video feed stable during hover</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">No video breakup at 50m range</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">No video breakup at 100m range</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">OSD data updates correctly in flight</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">No interference or noise in video</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+      </div>
+    </div>
+    
+    <!-- Section 10: Full Flight Test -->
+    <div class="test-section" data-section="10">
+      <div class="section-header">
+        <h2><span class="section-number">10</span> Full Flight Test</h2>
+        <span class="section-status" data-status></span>
+      </div>
+      <div class="test-items">
+        <div class="test-item">
+          <div class="test-description">Forward flight stable</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">Turns/banks smooth</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">3+ minute flight without issues</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">Battery voltage stable under load</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+        <div class="test-item">
+          <div class="test-description">No overheating (motors, ESC, VTX)</div>
+          <div class="test-controls">
+            <button class="btn-check" data-action="pass" title="Pass">✓</button>
+            <button class="btn-check" data-action="fail" title="Fail">✗</button>
+          </div>
+          <input type="text" class="notes-input" placeholder="Notes...">
+        </div>
+      </div>
+    </div>
+    
+    <!-- Summary Section -->
+    <div class="summary-section">
+      <div class="summary-grid">
+        <div class="summary-card total">
+          <div class="summary-number" id="total-tests">52</div>
+          <div class="summary-label">Total Tests</div>
+        </div>
+        <div class="summary-card passed">
+          <div class="summary-number" id="passed-tests">0</div>
+          <div class="summary-label">Passed</div>
+        </div>
+        <div class="summary-card failed">
+          <div class="summary-number" id="failed-tests">0</div>
+          <div class="summary-label">Failed</div>
+        </div>
+      </div>
+      
+      <div class="final-result pending" id="final-result">
+        Complete all tests to see result
+      </div>
+      
+      <div class="signature-section">
+        <div class="signature-box">
+          <div class="signature-line"></div>
+          <div class="signature-label">Inspector Signature</div>
+        </div>
+        <div class="signature-box">
+          <div class="signature-line"></div>
+          <div class="signature-label">Supervisor Signature (if failed)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <button class="print-btn" onclick="window.print()">🖨️ Print ATP</button>
+  
+  <script>
+    // Set today's date
+    document.getElementById('date').valueAsDate = new Date();
+    
+    // Handle pass/fail button clicks
+    document.querySelectorAll('.btn-check').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const controls = this.parentElement;
+        const action = this.dataset.action;
+        
+        // Clear both buttons
+        controls.querySelectorAll('.btn-check').forEach(b => {
+          b.classList.remove('pass', 'fail');
+        });
+        
+        // Set this button
+        this.classList.add(action);
+        
+        // Update counts and section status
+        updateCounts();
+      });
+    });
+    
+    function updateCounts() {
+      const passed = document.querySelectorAll('.btn-check.pass').length;
+      const failed = document.querySelectorAll('.btn-check.fail').length;
+      const total = document.querySelectorAll('.test-item').length;
+      
+      document.getElementById('passed-tests').textContent = passed;
+      document.getElementById('failed-tests').textContent = failed;
+      document.getElementById('total-tests').textContent = total;
+      
+      // Update section statuses
+      document.querySelectorAll('.test-section').forEach(section => {
+        const sectionPassed = section.querySelectorAll('.btn-check.pass').length;
+        const sectionFailed = section.querySelectorAll('.btn-check.fail').length;
+        const sectionTotal = section.querySelectorAll('.test-item').length;
+        const statusEl = section.querySelector('.section-status');
+        
+        if (sectionFailed > 0) {
+          statusEl.textContent = 'FAIL';
+          statusEl.className = 'section-status fail';
+        } else if (sectionPassed === sectionTotal) {
+          statusEl.textContent = 'PASS';
+          statusEl.className = 'section-status pass';
+        } else {
+          statusEl.textContent = `${sectionPassed}/${sectionTotal}`;
+          statusEl.className = 'section-status';
+        }
+      });
+      
+      // Update final result
+      const resultEl = document.getElementById('final-result');
+      if (passed + failed === total) {
+        if (failed === 0) {
+          resultEl.textContent = '✓ UNIT PASSED - Ready for Delivery';
+          resultEl.className = 'final-result pass';
+        } else {
+          resultEl.textContent = `✗ UNIT FAILED - ${failed} issue(s) require attention`;
+          resultEl.className = 'final-result fail';
+        }
+      } else {
+        resultEl.textContent = `Testing in progress... ${total - passed - failed} remaining`;
+        resultEl.className = 'final-result pending';
+      }
+    }
+    
+    // Initial count
+    updateCounts();
+  </script>
+</body>
+</html>
