@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400">
+  <style>
+    .frame { fill: #e8e8e8; stroke: #333; stroke-width: 2; }
+    .label { font-family: Arial, sans-serif; font-size: 11px; fill: #333; }
+    .label-bold { font-family: Arial, sans-serif; font-size: 12px; font-weight: bold; fill: #333; }
+    .callout { font-family: Arial, sans-serif; font-size: 10px; fill: #666; }
+    .wire-red { stroke: #e74c3c; stroke-width: 4; fill: none; stroke-linecap: round; }
+    .wire-black { stroke: #1a1a1a; stroke-width: 4; fill: none; stroke-linecap: round; }
+    .wire-balance { stroke: #95a5a6; stroke-width: 3; fill: none; stroke-linecap: round; }
+    .wire-antenna { stroke: #333; stroke-width: 2; fill: none; }
+    .connector { fill: #f39c12; stroke: #d68910; stroke-width: 1; }
+    .motor-wire { stroke: #333; stroke-width: 2; fill: none; }
+    .clip { fill: #7f8c8d; stroke: #5d6d7e; }
+    .good { fill: #27ae60; }
+    .bad { fill: #e74c3c; }
+  </style>
+  
+  <!-- Title -->
+  <text x="250" y="25" text-anchor="middle" class="label-bold" style="font-size: 14px;">CABLE MANAGEMENT - BOTTOM VIEW</text>
+  
+  <!-- Drone frame (bottom view) -->
+  <rect x="175" y="100" width="150" height="200" rx="8" class="frame"/>
+  
+  <!-- Arms -->
+  <line x1="190" y1="115" x2="100" y2="55" stroke="#333" stroke-width="3"/>
+  <line x1="310" y1="115" x2="400" y2="55" stroke="#333" stroke-width="3"/>
+  <line x1="190" y1="285" x2="100" y2="345" stroke="#333" stroke-width="3"/>
+  <line x1="310" y1="285" x2="400" y2="345" stroke="#333" stroke-width="3"/>
+  
+  <!-- Motor positions -->
+  <circle cx="85" cy="45" r="20" fill="#444" stroke="#222" stroke-width="2"/>
+  <circle cx="415" cy="45" r="20" fill="#444" stroke="#222" stroke-width="2"/>
+  <circle cx="85" cy="355" r="20" fill="#444" stroke="#222" stroke-width="2"/>
+  <circle cx="415" cy="355" r="20" fill="#444" stroke="#222" stroke-width="2"/>
+  
+  <!-- Motor wires routed along arms -->
+  <path d="M 100 55 Q 140 80 180 110" class="motor-wire"/>
+  <path d="M 400 55 Q 360 80 320 110" class="motor-wire"/>
+  <path d="M 100 345 Q 140 320 180 290" class="motor-wire"/>
+  <path d="M 400 345 Q 360 320 320 290" class="motor-wire"/>
+  
+  <!-- Wire clips on arms -->
+  <rect x="130" y="75" width="15" height="8" rx="2" class="clip"/>
+  <rect x="355" y="75" width="15" height="8" rx="2" class="clip"/>
+  <rect x="130" y="315" width="15" height="8" rx="2" class="clip"/>
+  <rect x="355" y="315" width="15" height="8" rx="2" class="clip"/>
+  
+  <!-- XT60 connector position -->
+  <path d="M 220 180 L 220 240 Q 220 260 200 260 L 160 260" class="wire-red"/>
+  <path d="M 230 180 L 230 250 Q 230 270 210 270 L 160 270" class="wire-black"/>
+  <rect x="135" y="255" width="30" height="20" rx="3" class="connector"/>
+  <text x="150" y="268" text-anchor="middle" style="font-size: 8px; fill: #333;">XT60</text>
+  
+  <!-- Balance lead routed -->
+  <path d="M 280 180 L 280 220 Q 280 240 300 240 L 340 240" class="wire-balance"/>
+  <rect x="340" y="232" width="35" height="16" rx="2" fill="white" stroke="#999"/>
+  <text x="357" y="244" text-anchor="middle" style="font-size: 7px; fill: #666;">BALANCE</text>
+  
+  <!-- Antenna mount -->
+  <circle cx="250" cy="290" r="6" fill="#f39c12" stroke="#d68910"/>
+  <path d="M 250 296 L 250 340" class="wire-antenna"/>
+  <circle cx="250" cy="350" r="8" fill="#333"/>
+  <text x="250" y="375" text-anchor="middle" class="callout">Antenna</text>
+  
+  <!-- Good practices box -->
+  <rect x="10" y="60" width="70" height="100" rx="5" fill="#d5f5e3" stroke="#27ae60"/>
+  <text x="45" y="78" text-anchor="middle" class="label-bold" fill="#27ae60">✓ DO</text>
+  <text x="15" y="95" class="callout" fill="#1e8449">• Secure wires</text>
+  <text x="15" y="108" class="callout" fill="#1e8449">• Use clips</text>
+  <text x="15" y="121" class="callout" fill="#1e8449">• Route along</text>
+  <text x="15" y="134" class="callout" fill="#1e8449">  arms</text>
+  <text x="15" y="147" class="callout" fill="#1e8449">• Tuck excess</text>
+  
+  <!-- Bad practices box -->
+  <rect x="10" y="170" width="70" height="100" rx="5" fill="#fadbd8" stroke="#e74c3c"/>
+  <text x="45" y="188" text-anchor="middle" class="label-bold" fill="#e74c3c">✗ DON'T</text>
+  <text x="15" y="205" class="callout" fill="#922b21">• Loose wires</text>
+  <text x="15" y="218" class="callout" fill="#922b21">• Near props</text>
+  <text x="15" y="231" class="callout" fill="#922b21">• Hanging</text>
+  <text x="15" y="244" class="callout" fill="#922b21">  cables</text>
+  <text x="15" y="257" class="callout" fill="#922b21">• Pinched</text>
+  
+  <!-- Callout labels -->
+  <line x1="150" y1="265" x2="50" y2="300" stroke="#999" stroke-dasharray="3,3"/>
+  <text x="20" y="310" class="callout">Power cable</text>
+  <text x="20" y="322" class="callout">faces REAR</text>
+  
+  <line x1="357" y1="248" x2="440" y2="280" stroke="#999" stroke-dasharray="3,3"/>
+  <text x="420" y="295" class="callout">Balance lead</text>
+  <text x="420" y="307" class="callout">tucked safely</text>
+  
+  <!-- Wire clip callout -->
+  <line x1="137" y1="75" x2="60" y2="40" stroke="#999" stroke-dasharray="3,3"/>
+  <text x="20" y="35" class="callout">Wire clips</text>
+  <text x="20" y="47" class="callout">(secure wires)</text>
+</svg>

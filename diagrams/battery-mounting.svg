@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 350">
+  <style>
+    .frame { fill: #e8e8e8; stroke: #333; stroke-width: 2; }
+    .battery { fill: #2c3e50; stroke: #1a252f; stroke-width: 2; }
+    .strap { fill: none; stroke: #34495e; stroke-width: 6; stroke-linecap: round; }
+    .label { font-family: Arial, sans-serif; font-size: 11px; fill: #333; }
+    .label-bold { font-family: Arial, sans-serif; font-size: 12px; font-weight: bold; fill: #333; }
+    .callout { font-family: Arial, sans-serif; font-size: 10px; fill: #666; }
+    .arrow { fill: none; stroke: #e74c3c; stroke-width: 2; marker-end: url(#arrowRed); }
+    .wire-red { stroke: #e74c3c; stroke-width: 3; fill: none; }
+    .wire-black { stroke: #1a1a1a; stroke-width: 3; fill: none; }
+    .connector { fill: #f39c12; stroke: #d68910; stroke-width: 1; }
+    .step-circle { fill: #27ae60; }
+    .step-text { font-family: Arial, sans-serif; font-size: 10px; font-weight: bold; fill: white; }
+  </style>
+  
+  <defs>
+    <marker id="arrowRed" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#e74c3c"/>
+    </marker>
+  </defs>
+  
+  <!-- Title -->
+  <text x="250" y="25" text-anchor="middle" class="label-bold" style="font-size: 14px;">BATTERY MOUNTING - SIDE VIEW</text>
+  
+  <!-- Drone frame (side view) -->
+  <rect x="100" y="150" width="300" height="30" rx="5" class="frame"/>
+  
+  <!-- Battery on top -->
+  <rect x="150" y="80" width="200" height="65" rx="5" class="battery"/>
+  <text x="250" y="118" text-anchor="middle" style="font-size: 10px; fill: #bdc3c7;">6S LiPo BATTERY</text>
+  
+  <!-- Battery strap -->
+  <path d="M 130 90 Q 130 75 150 75 L 350 75 Q 370 75 370 90 L 370 160 Q 370 175 350 175 L 150 175 Q 130 175 130 160 Z" class="strap"/>
+  
+  <!-- Strap label -->
+  <line x1="380" y1="125" x2="420" y2="125" class="arrow"/>
+  <text x="425" y="120" class="callout">Battery Strap</text>
+  <text x="425" y="132" class="callout">(Velcro side DOWN)</text>
+  
+  <!-- Step 1: Position battery -->
+  <circle cx="40" cy="110" r="12" class="step-circle"/>
+  <text x="40" y="114" text-anchor="middle" class="step-text">1</text>
+  <text x="58" y="105" class="label">Place battery</text>
+  <text x="58" y="117" class="label">centered on frame</text>
+  
+  <!-- XT60 connector hanging -->
+  <path d="M 170 145 L 170 200" class="wire-red"/>
+  <path d="M 180 145 L 180 200" class="wire-black"/>
+  <rect x="163" y="200" width="25" height="15" rx="2" class="connector"/>
+  <text x="175" y="210" text-anchor="middle" style="font-size: 7px; fill: #333;">XT60</text>
+  
+  <!-- Balance lead -->
+  <path d="M 330 145 L 330 190 L 380 190" stroke="#bdc3c7" stroke-width="2" fill="none"/>
+  <rect x="380" y="183" width="30" height="14" rx="2" fill="white" stroke="#999"/>
+  <text x="395" y="193" text-anchor="middle" style="font-size: 6px; fill: #666;">BAL</text>
+  
+  <!-- Step 2: Thread strap -->
+  <circle cx="40" cy="160" r="12" class="step-circle"/>
+  <text x="40" y="164" text-anchor="middle" class="step-text">2</text>
+  <text x="58" y="155" class="label">Thread strap</text>
+  <text x="58" y="167" class="label">through slots</text>
+  
+  <!-- Step 3: Secure -->
+  <circle cx="40" cy="210" r="12" class="step-circle"/>
+  <text x="40" y="214" text-anchor="middle" class="step-text">3</text>
+  <text x="58" y="205" class="label">Pull strap tight,</text>
+  <text x="58" y="217" class="label">secure velcro</text>
+  
+  <!-- Connector labels -->
+  <line x1="175" y1="220" x2="175" y2="250" stroke="#999" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="175" y="265" text-anchor="middle" class="callout">Power Connector</text>
+  <text x="175" y="277" text-anchor="middle" class="callout">(Connect to drone)</text>
+  
+  <line x1="395" y1="200" x2="395" y2="240" stroke="#999" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="395" y="255" text-anchor="middle" class="callout">Balance Lead</text>
+  <text x="395" y="267" text-anchor="middle" class="callout">(For charging only)</text>
+  
+  <!-- Warning box -->
+  <rect x="100" y="290" width="300" height="45" rx="5" fill="#fff3cd" stroke="#ffc107" stroke-width="2"/>
+  <text x="115" y="310" class="label-bold" fill="#856404">⚠ IMPORTANT:</text>
+  <text x="115" y="325" class="callout" fill="#856404">Battery should NOT shift when drone is shaken.</text>
+  <text x="115" y="337" class="callout" fill="#856404">Loose battery = unstable flight = crash risk.</text>
+</svg>

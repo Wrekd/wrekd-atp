@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Powerus - Drone Acceptance Test Procedure</title>
+  <style>
+    @page {
+      size: letter;
+      margin: 0.5in;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: 11pt;
+      line-height: 1.4;
+      color: #1a1a1a;
+      background: white;
+    }
+    
+    .page {
+      page-break-after: always;
+      padding: 0.25in;
+    }
+    
+    .page:last-child {
+      page-break-after: avoid;
+    }
+    
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 3px solid #0B0B0A;
+      padding-bottom: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .header-left h1 {
+      font-size: 18pt;
+      font-weight: 700;
+      color: #0B0B0A;
+      margin-bottom: 4px;
+    }
+    
+    .header-left .subtitle {
+      font-size: 10pt;
+      color: #666;
+    }
+    
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .logo-container svg {
+      height: 40px;
+      width: auto;
+    }
+    
+    .logo-text {
+      font-size: 14pt;
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: #0B0B0A;
+    }
+    
+    /* Meta info bar */
+    .meta-bar {
+      display: flex;
+      gap: 30px;
+      background: #f5f5f5;
+      padding: 12px 15px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+    
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    
+    .meta-label {
+      font-size: 8pt;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #666;
+      font-weight: 600;
+    }
+    
+    .meta-value {
+      border-bottom: 1px solid #333;
+      min-width: 120px;
+      height: 20px;
+      font-size: 10pt;
+    }
+    
+    /* Section styling */
+    .section {
+      margin-bottom: 25px;
+    }
+    
+    .section-header {
+      background: #0B0B0A;
+      color: white;
+      padding: 8px 15px;
+      font-size: 12pt;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 0;
+    }
+    
+    .section-number {
+      background: #FDFAF3;
+      color: #0B0B0A;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11pt;
+      font-weight: 700;
+    }
+    
+    .section-content {
+      border: 1px solid #ddd;
+      border-top: none;
+      padding: 15px;
+    }
+    
+    /* Checklist items */
+    .checklist {
+      list-style: none;
+    }
+    
+    .checklist-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .checklist-item:last-child {
+      border-bottom: none;
+    }
+    
+    .checkbox {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #333;
+      border-radius: 3px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    
+    .check-content {
+      flex: 1;
+    }
+    
+    .check-title {
+      font-weight: 600;
+      margin-bottom: 3px;
+    }
+    
+    .check-description {
+      font-size: 10pt;
+      color: #555;
+      line-height: 1.3;
+    }
+    
+    .check-result {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+    
+    .result-box {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 9pt;
+    }
+    
+    .result-circle {
+      width: 16px;
+      height: 16px;
+      border: 2px solid #333;
+      border-radius: 50%;
+    }
+    
+    .notes-line {
+      border-bottom: 1px solid #ccc;
+      height: 20px;
+      min-width: 100px;
+    }
+    
+    /* Warning box */
+    .warning-box {
+      background: #fff3cd;
+      border: 2px solid #ffc107;
+      border-radius: 5px;
+      padding: 12px 15px;
+      margin: 15px 0;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    
+    .warning-icon {
+      font-size: 16pt;
+      line-height: 1;
+    }
+    
+    .warning-text {
+      font-size: 10pt;
+      color: #856404;
+    }
+    
+    .warning-text strong {
+      display: block;
+      margin-bottom: 3px;
+    }
+    
+    /* Info box */
+    .info-box {
+      background: #e7f3ff;
+      border: 1px solid #b3d7ff;
+      border-radius: 5px;
+      padding: 12px 15px;
+      margin: 15px 0;
+      font-size: 10pt;
+      color: #004085;
+    }
+    
+    /* Diagram container */
+    .diagram-container {
+      text-align: center;
+      margin: 20px 0;
+      padding: 15px;
+      background: #fafafa;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    
+    .diagram-container svg {
+      max-width: 100%;
+      height: auto;
+    }
+    
+    .diagram-caption {
+      font-size: 9pt;
+      color: #666;
+      margin-top: 10px;
+      font-style: italic;
+    }
+    
+    /* Summary section */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .summary-box {
+      border: 2px solid #333;
+      padding: 15px;
+      text-align: center;
+      border-radius: 5px;
+    }
+    
+    .summary-box.pass {
+      border-color: #27ae60;
+    }
+    
+    .summary-box.fail {
+      border-color: #e74c3c;
+    }
+    
+    .summary-label {
+      font-size: 9pt;
+      text-transform: uppercase;
+      color: #666;
+      margin-bottom: 5px;
+    }
+    
+    .summary-value {
+      font-size: 24pt;
+      font-weight: 700;
+      border-bottom: 2px solid #333;
+      display: inline-block;
+      min-width: 60px;
+    }
+    
+    /* Signature section */
+    .signature-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 2px solid #333;
+    }
+    
+    .signature-box {
+      text-align: center;
+    }
+    
+    .signature-line {
+      border-bottom: 2px solid #333;
+      height: 40px;
+      margin-bottom: 5px;
+    }
+    
+    .signature-label {
+      font-size: 9pt;
+      color: #666;
+    }
+    
+    /* Final result */
+    .final-result {
+      margin-top: 20px;
+      padding: 15px;
+      border: 3px solid #333;
+      border-radius: 5px;
+      text-align: center;
+    }
+    
+    .result-title {
+      font-size: 12pt;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    
+    .result-options {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+    }
+    
+    .result-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14pt;
+      font-weight: 700;
+    }
+    
+    .result-checkbox {
+      width: 24px;
+      height: 24px;
+      border: 3px solid #333;
+      border-radius: 3px;
+    }
+    
+    /* Print styles */
+    @media print {
+      body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      
+      .section-header {
+        background: #0B0B0A !important;
+        color: white !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      
+      .section-number {
+        background: #FDFAF3 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      
+      .warning-box {
+        background: #fff3cd !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      
+      .info-box {
+        background: #e7f3ff !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- PAGE 1: Cover & Orientation -->
+  <div class="page">
+    <div class="header">
+      <div class="header-left">
+        <h1>Acceptance Test Procedure</h1>
+        <div class="subtitle">FPV Tactical Drone - Pre-Delivery Verification</div>
+      </div>
+      <div class="logo-container">
+        <svg viewBox="0 0 386 387" xmlns="http://www.w3.org/2000/svg" style="fill: #0B0B0A;">
+          <path d="M175.598 12.5583C180.727 -4.04538 204.304 -4.23473 209.677 12.2868L212.135 19.4851C214.127 25.0427 216.309 30.5121 218.671 35.8864L219.07 35.6931C304.081 -9.22008 398.033 81.0899 354.432 166.905L353.584 168.701C359.931 171.367 366.406 173.783 372.997 175.931C388.732 181.06 389.713 202.46 375.941 209.618L372.997 210.863C366.385 213.018 359.889 215.44 353.522 218.117C353.825 218.774 354.141 219.426 354.47 220.074C398.034 305.815 308.539 397.507 222.813 358.058L218.726 356.088C218.103 355.77 217.475 355.465 216.843 355.171C214.201 361.493 211.808 367.943 209.677 374.508L208.462 377.402C201.429 390.94 180.407 389.805 175.598 374.237C173.542 367.582 171.216 361.045 168.633 354.64C167.633 355.081 166.642 355.55 165.662 356.05L161.633 358.001C78.5601 396.184 -6.67286 307.173 32.7064 224.417L34.7113 220.419C35.0006 219.869 35.2786 219.314 35.5491 218.757C30.3526 216.55 25.0649 214.515 19.6917 212.662L12.4271 210.281C-4.14235 205.14 -4.14237 181.655 12.4271 176.513C20.2876 174.076 27.9776 171.253 35.4769 168.071L34.7874 166.656C-9.54255 82.4128 81.3372 -8.64825 165.413 35.7692C165.884 36.0179 166.358 36.2593 166.834 36.4939C170.145 28.7095 173.075 20.7233 175.598 12.5583ZM318.787 236C284.596 257.08 255.691 286.06 234.675 320.334C235.275 320.59 235.872 320.868 236.465 321.171C289.648 348.299 346.697 291.137 319.622 237.848C319.309 237.231 319.032 236.614 318.787 236ZM70.137 236.82C69.9012 237.452 69.6211 238.082 69.2913 238.709C41.378 291.77 97.9885 346.604 147.923 321.133C149.02 320.573 150.123 320.09 151.231 319.674C131.075 286.063 103.248 257.612 70.137 236.82ZM193.03 72.5036C166.186 123.882 124.381 166.178 73.2396 193.397C124.381 220.617 166.186 262.912 193.03 314.291C220.609 262.987 263.011 220.747 314.385 193.397C263.011 166.047 220.609 123.808 193.03 72.5036Z"/>
+        </svg>
+        <span class="logo-text">POWERUS</span>
+      </div>
+    </div>
+    
+    <div class="meta-bar">
+      <div class="meta-item">
+        <span class="meta-label">Unit Serial #</span>
+        <div class="meta-value"></div>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Inspector</span>
+        <div class="meta-value"></div>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Date</span>
+        <div class="meta-value"></div>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Order/Batch Ref</span>
+        <div class="meta-value"></div>
+      </div>
+    </div>
+    
+    <div class="info-box">
+      <strong>Purpose:</strong> This procedure verifies that each drone is fully assembled, configured correctly, and safe to fly before delivery. Complete ALL sections. Mark each item PASS or FAIL. Any FAIL requires notes explaining the issue.
+    </div>
+    
+    <!-- Drone Orientation Diagram -->
+    <div class="diagram-container">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320" style="max-height: 280px;">
+        <style>
+          .frame { fill: none; stroke: #333; stroke-width: 3; }
+          .motor { fill: #444; stroke: #222; stroke-width: 2; }
+          .label { font-family: Arial, sans-serif; font-size: 12px; fill: #333; }
+          .label-bold { font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #333; }
+          .cw { fill: none; stroke: #e74c3c; stroke-width: 2; }
+          .ccw { fill: none; stroke: #3498db; stroke-width: 2; }
+        </style>
+        
+        <text x="200" y="20" text-anchor="middle" class="label-bold" style="font-size: 14px;">DRONE ORIENTATION - Know Your Aircraft</text>
+        
+        <!-- Center body -->
+        <rect x="160" y="80" width="80" height="140" rx="8" class="frame" fill="#f5f5f5"/>
+        
+        <!-- Arms -->
+        <line x1="175" y1="95" x2="90" y2="40" class="frame"/>
+        <line x1="225" y1="95" x2="310" y2="40" class="frame"/>
+        <line x1="175" y1="205" x2="90" y2="260" class="frame"/>
+        <line x1="225" y1="205" x2="310" y2="260" class="frame"/>
+        
+        <!-- Motors -->
+        <circle cx="75" cy="32" r="22" class="motor"/>
+        <circle cx="325" cy="32" r="22" class="motor"/>
+        <circle cx="75" cy="268" r="22" class="motor"/>
+        <circle cx="325" cy="268" r="22" class="motor"/>
+        
+        <!-- Motor numbers -->
+        <text x="75" y="37" text-anchor="middle" class="label-bold" fill="white">1</text>
+        <text x="325" y="37" text-anchor="middle" class="label-bold" fill="white">2</text>
+        <text x="75" y="273" text-anchor="middle" class="label-bold" fill="white">3</text>
+        <text x="325" y="273" text-anchor="middle" class="label-bold" fill="white">4</text>
+        
+        <!-- Rotation labels -->
+        <text x="75" y="60" text-anchor="middle" style="font-size: 9px; fill: #3498db;">CCW</text>
+        <text x="325" y="60" text-anchor="middle" style="font-size: 9px; fill: #e74c3c;">CW</text>
+        <text x="75" y="245" text-anchor="middle" style="font-size: 9px; fill: #e74c3c;">CW</text>
+        <text x="325" y="245" text-anchor="middle" style="font-size: 9px; fill: #3498db;">CCW</text>
+        
+        <!-- FRONT indicator -->
+        <path d="M 200 65 L 188 80 L 212 80 Z" fill="#27ae60"/>
+        <text x="200" y="58" text-anchor="middle" class="label-bold" fill="#27ae60">FRONT</text>
+        
+        <!-- Camera -->
+        <rect x="188" y="78" width="24" height="12" rx="2" fill="#333"/>
+        <text x="200" y="87" text-anchor="middle" style="font-size: 7px; fill: white;">CAM</text>
+        
+        <!-- REAR indicator -->
+        <text x="200" y="235" text-anchor="middle" class="label" fill="#666">REAR</text>
+        
+        <!-- Antenna -->
+        <circle cx="200" cy="215" r="4" fill="#f39c12"/>
+        <line x1="200" y1="219" x2="200" y2="240" stroke="#333" stroke-width="2"/>
+        
+        <!-- Legend -->
+        <rect x="30" y="295" width="12" height="3" fill="#e74c3c"/>
+        <text x="47" y="300" style="font-size: 9px; fill: #666;">CW = Clockwise</text>
+        <rect x="150" y="295" width="12" height="3" fill="#3498db"/>
+        <text x="167" y="300" style="font-size: 9px; fill: #666;">CCW = Counter-clockwise</text>
+      </svg>
+      <div class="diagram-caption">Figure 1: Drone orientation showing motor positions, rotation directions, and key components</div>
+    </div>
+    
+    <div class="section">
+      <div class="section-header">
+        <span class="section-number">1</span>
+        VISUAL INSPECTION (No Power)
+      </div>
+      <div class="section-content">
+        <div class="info-box">
+          <strong>What you're checking:</strong> Before applying any power, visually inspect the entire aircraft for physical damage, loose components, or assembly errors. This prevents powering on a damaged unit.
+        </div>
+        
+        <ul class="checklist">
+          <li class="checklist-item">
+            <div class="checkbox"></div>
+            <div class="check-content">
+              <div class="check-title">Frame Integrity</div>
+              <div class="check-description">Inspect all four arms for cracks, chips, or damage. Carbon fiber should be smooth with no delamination. Check where arms meet the center body - these joints take the most stress.</div>
+            </div>
+            <div class="check-result">
+              <div class="result-box"><div class="result-circle"></div> Pass</div>
+              <div class="result-box"><div class="result-circle"></div> Fail</div>
+            </div>
+          </li>
+          
+          <li class="checklist-item">
+            <div class="checkbox"></div>
+            <div class="check-content">
+              <div class="check-title">Motor Attachment</div>
+              <div class="check-description">Check all 4 motor screws are present and tight. Motors should not wobble when gently pushed. Spin each motor by hand - should rotate smoothly with no grinding, clicking, or resistance.</div>
+            </div>
+            <div class="check-result">
+              <div class="result-box"><div class="result-circle"></div> Pass</div>
+              <div class="result-box"><div class="result-circle"></div> Fail</div>
+            </div>
+          </li>
+          
+          <li class="checklist-item">
+            <div class="checkbox"></div>
+            <div class="check-content">
+              <div class="check-title">Electronics Stack</div>
+              <div class="check-description">The flight controller and ESC (speed controller) stack in the center should be firmly mounted. No loose screws, no visible damage to circuit boards. Wires should not be pinched or frayed.</div>
+            </div>
+            <div class="check-result">
+              <div class="result-box"><div class="result-circle"></div> Pass</div>
+              <div class="result-box"><div class="result-circle"></div> Fail</div>
+            </div>
+          </li>
+          
+          <li class="checklist-item">
+            <div class="checkbox"></div>
+            <div class="check-content">
+              <div class="check-title">Camera & VTX</div>
+              <div class="check-description">Camera should be mounted securely in the front of the frame. Lens should be clean (no fingerprints, scratches, or dust). Video transmitter (VTX) antenna connector should be hand-tight.</div>
+            </div>
+            <div class="check-result">
+              <div class="result-box"><div class="result-circle"></div> Pass</div>
+              <div class="result-box"><div class="result-circle"></div> Fail</div>
+            </div>
+          </li>
+          
+          <li class="checklist-item">
+            <div class="checkbox"></div>
+            <div class="check-content">
+              <div class="check-title">Antenna Installation</div>
+              <div class="check-description">VTX antenna at rear should be firmly attached. Antenna should point upward or at 45° angle - never directly at the ground. Check antenna cable is not kinked or damaged.</div>
+            </div>
+            <div class="check-result">
+              <div class="result-box"><div class="result-circle"></div> Pass</div>
+              <div class="result-box"><div class="result-circle"></div> Fail</div>
+            </div>
+          </li>
+          
+          <li class="checklist-item">
+            <div class="checkbox"></div>
+            <div class="check-content">
+              <div class="check-title">Wire Routing</div>
+              <div class="check-description">All wires should be secured with clips or zip ties. No loose wires that could contact spinning propellers. Motor wires routed along arms, not hanging free.</div>
+            </div>
+            <div class="check-result">
+              <div class="result-box"><div class="result-circle"></div> Pass</div>
+              <div class="result-box"><div class="result-circle"></div> Fail</div>
+            </div>
+          </li>
+          
+          <li class="checklist-item">
+            <div class="checkbox"></div>
+            <div class="check-content">
+              <div class="check-title">XT60 Power Connector</div>
+              <div class="check-description">The yellow XT60 connector (main power) should have clean, undamaged pins. No burn marks, melting, or corrosion. Connector should be securely attached to its wires.</div>
+            </div>
+            <div class="check-result">
+              <div class="result-box"><div class="result-circle"></div> Pass</div>
+              <div class="result-box"><div class="result-circle"></div> Fail</div>
+            </div>
+          </li>
+        </ul>
+        
+        <div style="margin-top: 15px;">
+          <strong>Section 1 Notes:</strong>
+          <div class="notes-line" style="margin-top: 8px;"></div>
+          <div class="notes-line" style="margin-top: 8px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- PAGE 2: Battery & Power Tests -->
+  <div class="page">
+    <div class="header">
+      <div class="header-left">
+        <h1>Acceptance Test Procedure</h1>
+        <div class="subtitle">Page 2 of 4 - Battery Installation & Power-On</div>
+      </div>
+      <div class="logo-container">
+        <svg viewBox="0 0 386 387" xmlns="http://www.w3.org/2000/svg" style="fill: #0B0B0A; height: 30px;">
+          <path d="M175.598 12.5583C180.727 -4.04538 204.304 -4.23473 209.677 12.2868L212.135 19.4851C214.127 25.0427 216.309 30.5121 218.671 35.8864L219.07 35.6931C304.081 -9.22008 398.033 81.0899 354.432 166.905L353.584 168.701C359.931 171.367 366.406 173.783 372.997 175.931C388.732 181.06 389.713 202.46 375.941 209.618L372.997 210.863C366.385 213.018 359.889 215.44 353.522 218.117C353.825 218.774 354.141 219.426 354.47 220.074C398.034 305.815 308.539 397.507 222.813 358.058L218.726 356.088C218.103 355.77 217.475 355.465 216.843 355.171C214.201 361.493 211.808 367.943 209.677 374.508L208.462 377.402C201.429 390.94 180.407 389.805 175.598 374.237C173.542 367.582 171.216 361.045 168.633 354.64C167.633 355.081 166.642 355.55 165.662 356.05L161.633 358.001C78.5601 396.184 -6.67286 307.173 32.7064 224.417L34.7113 220.419C35.0006 219.869 35.2786 219.314 35.5491 218.757C30.3526 216.55 25.0649 214.515 19.6917 212.662L12.4271 210.281C-4.14235 205.14 -4.14237 181.655 12.4271 176.513C20.2876 174.076 27.9776 171.253 35.4769 168.071L34.7874 166.656C-9.54255 82.4128 81.3372 -8.64825 165.413 35.7692C165.884 36.0179 166.358 36.2593 166.834 36.4939C170.145 28.7095 173.075 20.7233 175.598 12.5583ZM193.03 72.5036C166.186 123.882 124.381 166.178 73.2396 193.397C124.381 220.617 166.186 262.912 193.03 314.291C220.609 262.987 263.011 220.747 314.385 193.397C263.011 166.047 220.609 123.808 193.03 72.5036Z"/>
+        </svg>
+        <span class="logo-text" style="font-size: 11pt;">POWERUS</span>
+      </div>
+    </div>
+    
+    <!-- Battery Mounting Diagram -->
+    <div class="diagram-container">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 220" style="max-height: 200px;">
+        <style>
+          .frame { fill: #e8e8e8; stroke: #333; stroke-width: 2; }
+          .battery { fill: #2c3e50; stroke: #1a252f; stroke-width: 2; }
+          .strap { fill: none; stroke: #34495e; stroke-width: 5; stroke-linecap: round; }
+          .label { font-family: Arial, sans-serif; font-size: 10px; fill: #333; }
+          .wire-red { stroke: #e74c3c; stroke-width: 3; fill: none; }
+          .wire-black { stroke: #1a1a1a; stroke-width: 3; fill: none; }
+          .connector { fill: #f39c12; stroke: #d68910; stroke-width: 1; }
+        </style>
+        
+        <text x="250" y="18" text-anchor="middle" style="font-size: 12px; font-weight: bold; fill: #333;">BATTERY MOUNTING - Side View</text>
+        
+        <!-- Drone frame -->
+        <rect x="100" y="110" width="300" height="25" rx="5" class="frame"/>
+        
+        <!-- Battery -->
+        <rect x="150" y="55" width="200" height="50" rx="5" class="battery"/>
+        <text x="250" y="85" text-anchor="middle" style="font-size: 9px; fill: #bdc3c7;">6S LiPo BATTERY</text>
+        
+        <!-- Strap -->
+        <path d="M 130 65 Q 130 50 150 50 L 350 50 Q 370 50 370 65 L 370 120 Q 370 135 350 135 L 150 135 Q 130 135 130 120 Z" class="strap"/>
+        
+        <!-- XT60 -->
+        <path d="M 170 105 L 170 155" class="wire-red"/>
+        <path d="M 180 105 L 180 155" class="wire-black"/>
+        <rect x="163" y="155" width="25" height="12" rx="2" class="connector"/>
+        <text x="175" y="164" text-anchor="middle" style="font-size: 6px; fill: #333;">XT60</text>
+        
+        <!-- Balance lead -->
+        <path d="M 330 105 L 330 145 L 380 145" stroke="#95a5a6" stroke-width="2" fill="none"/>
+        <rect x="380" y="139" width="28" height="12" rx="2" fill="white" stroke="#999"/>
+        <text x="394" y="148" text-anchor="middle" style="font-size: 5px; fill: #666;">BAL</text>
+        
+        <!-- Labels -->
+        <text x="60" y="60" class="label">1. Place battery</text>
+        <text x="60" y="72" class="label">   centered</text>
+        <text x="60" y="100" class="label">2. Thread strap</text>
+        <text x="60" y="112" class="label">   through slots</text>
+        <text x="60" y="140" class="label">3. Pull tight,</text>
+        <text x="60" y="152" class="label">   secure velcro</text>
+        
+        <text x="175" y="185" text-anchor="middle" style="font-size: 8px; fill: #666;">Connect to drone</text>
+        <text x="394" y="170" text-anchor="middle" style="font-size: 8px; fill: #666;">For charging only</text>
+      </svg>
+      <div class="diagram-caption">Figure 2: Proper battery mounting with strap secured and connectors positioned correctly</div>
+    </div>
+    
+    <div class="section">
+      <div class="section-header">
+        <span class="section-number">2</span>
+        BATTERY INSTALLATION
+      </div>
+      <div class="section-content">
+        <div class="warning-box">
+          <div class="warning-icon">⚠️</div>
+          <div class="warning-text">
+            <strong>SAFETY FIRST</strong>
+            Do NOT connect the battery yet. This section is about proper physical mounting only. Power-on tests come next.
+          </div>
+        </div>
+        
+        <ul class="checklist">
+          <li class="checklist-item">
+            <div class="checkbox"></div>
+            <div class="check-content">
+              <div class="check-title">Battery Pad Present</div>
+              <div class="check-description">A non-slip battery pad should be on top of the frame where the battery sits. This prevents the battery from sliding during flight and protects the frame from vibration.</div>
+            </div>
+            <div class="check-result">
+              <div class="result-box"><div class="result-circle"></div> Pass</div>
+              <div class="result-box"><div class="result-circle"></div> Fail</div>
+            </div>
+          </li>
+          
+          <li class="checklist-item">
+            <div class="checkbox"></div>
+            <div class="check-content">
+              <div class="check-title">Battery Strap Installed</div>
+              <div class="check-description">Battery strap should be threaded through the frame slots. The velcro (hook) side should face DOWN toward the battery, soft (loop) side faces OUT.</div>
+            </div>
+            <div class="check-result">
+              <div class="result-box"><div class="result-circle"></div> Pass</div>
+              <div class="result-box"><div class="result-circle"></div> Fail</div>
+            </div>
+          </li>
+          
+          <li class="checklist-item">
+            <div class="checkbox"></div>
+            <div class="check-content">
+              <div class="check-title">Battery Position</div>
+              <div class="check-description">Place battery centered on the frame, aligned with the long axis of the drone. Battery should sit flat with no wobble. Adjust position until drone balances level.</div>
+            </div>
+            <div class="check-result">
+              <div class="result-box"><div class="result-circle"></div> Pass</div>
+              <div class="result-box"><div class="result-circle"></div> Fail</div>
+            </div>
+          </li>
+          
+          <li class="checklist-item">
+            <div class="checkbox"></div>
+            <div class="check-content">
+              <div class="check-title">Strap Tension</div>
+              <div class="check-description">Strap must be pulled TIGHT. The battery should not move at all when you shake the drone. A loose battery will shift during flight, causing balance issues or crashes.</div>
+            </div>
+            <div class="check-result">
+              <div class="result-box"><div class="result-circle"></div> Pass</div>
+              <div class="result-box"><div class="result-circle"></div> Fail</div>
+            </div>
+          </li>
+          
+          <li class="checklist-item">
+            <div class="checkbox"></div>
+            <div class="check-content">
+              <div class="check-title">Cable Position</div>
+              <div class="check-description">Battery power cable (red/black wires with yellow XT60) should exit toward the REAR of the drone. Balance lead (white connector with multiple wires) should be tucked safely, not dangling.</div>
+            </div>
+            <div class="check-result">
+              <div class="result-box"><div class="result-circle"></div> Pass</div>
+              <div class="result-box"><div class="result-circle"></div> Fail</div>
+            </div>
+          </li>
+        </ul>
+        
+        <div style="margin-top: 15px;">
+          <strong>Section 2 Notes:</strong>
+          <div class="notes-line" style="margin-top: 8px;"></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="section">
+      <div class="section-header">
+        <span class="section-number">3</span>
+        POWER-ON TEST (Props OFF)
+      </div>
+      <div class="section-content">
+        <div class="warning-box">
+          <div class="warning-icon">🚫</div>
+          <div class="warning-text">
+            <strong>REMOVE ALL PROPELLERS</strong>
+            Do NOT install propellers until Section 6. Motors will spin during testing. Exposed motors without props are safe. Motors WITH props can cause serious injury.
+          </div>
+        </div>
+        
+        <ul class="checklist">
+          <li class="checklist-item">
+            <div class="checkbox"></div>
+            <div class="check-content">
+              <div class="check-title">Props Removed Confirmed</div>
+              <div class="check-description">Verify ALL FOUR propellers are removed before proceeding. Check each motor - there should be just the bare motor bell visible, no propeller attached.</div>
+            </div>
+            <div class="check-result">
+              <div class="result-box"><div class="result-circle"></div> Pass</div>
+              <div class="result-box"><div class="result-circle"></div> Fail</div>
+            </div>
+          </li>
+          
+          <li class="checklist-item">
+            <div class="checkbox"></div>
+            <div class="check-content">
+              <div class="check-title">Connect Battery</div>
+              <div class="check-description">Plug the battery XT60 into the drone XT60. Listen for startup tones (musical beeps). The flight controller should make a series of beeps indicating it has started successfully.</div>
+            </div>
+            <div class="check-result">
+              <div class="result-box"><div class="result-circle"></div> Pass</div>
+              <div class="result-box"><div class="result-circle"></div> Fail</div>
+            </div>
+          </li>
+          
+          <li class="checklist-item">
+            <div class="checkbox"></div>
+            <div class="check-content">
+              <div class="check-title">No Smoke or Smell</div>
+              <div class="check-description">Immediately after connecting, check for any smoke, sparks, burning smell, or excessive heat. If ANY of these occur, DISCONNECT BATTERY IMMEDIATELY.</div>
+            </div>
+            <div class="check-result">
+              <div class="result-box"><div class="result-circle"></div> Pass</div>
+              <div class="result-box"><div class="result-circle"></div> Fail</div>
+            </div>
+          </li>
+          
+          <li class="checklist-item">
+            <div class="checkbox"></div>
+            <div class="check-content">
+              <div class="check-title">LED Status Normal</div>
+              <div class="check-description">Check status LEDs on the flight controller. Normal: solid or slow blinking. Abnormal: rapid flashing usually indicates an error. Note LED color and pattern.</div>
+            </div>
+            <div class="check-result">
+              <div class="result-box"><div class="result-circle"></div> Pass</div>
+              <div class="result-box"><div class="result-circle"></div> Fail</div>
+            </div>
+          </li>
+          
+          <li class="checklist-item">
+            <div class="checkbox"></div>
+            <div class="check-content">
+              <div class="check-title">Video System Active</div>
+              <div class="check-description">Using FPV goggles set to the correct channel, verify you can see the camera image. Image should be clear, properly oriented (not upside down), and show OSD (on-screen display) with battery voltage.</div>
+            </div>
+            <div class="check-result">
+              <div class="result-box"><div class="result-circle"></div> Pass</div>
+              <div class="result-box"><div class="result-circle"></div> Fail</div>
+            </div>
+          </li>
+        </ul>
+        
+        <div style="margin-top: 15px;">
+          <strong>Section 3 Notes:</strong>
+          <div class="notes-line" style="margin-top: 8px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- PAGE 3: Radio & Motor Tests -->
+  <div class="page">
+    <div class="header">
+      <div class="header-left">
+        <h1>Acceptance Test Procedure</h1>
+        <div class="subtitle">Page 3 of 4 - Radio Link & Motor Tests</div>
+      </div>
+      <div class="logo-container">
+        <svg viewBox="0 0 386 387" xmlns="http://www.w3.org/2000/svg" style="fill: #0B0B0A; height: 30px;">
+          <path d="M175.598 12.5583C180.727 -4.04538 204.304 -4.23473 209.677 12.2868L212.135 19.4851C214.127 25.0427 216.309 30.5121 218.671 35.8864L219.07 35.6931C304.081 -9.22008 398.033 81.0899 354.432 166.905L353.584 168.701C359.931 171.367 366.406 173.783 372.997 175.931C388.732 181.06 389.713 202.46 375.941 209.618L372.997 210.863C366.385 213.018 359.889 215.44 353.522 218.117C353.825 218.774 354.141 219.426 354.47 220.074C398.034 305.815 308.539 397.507 222.813 358.058L218.726 356.088C218.103 355.77 217.475 355.465 216.843 355.171C214.201 361.493 211.808 367.943 209.677 374.508L208.462 377.402C201.429 390.94 180.407 389.805 175.598 374.237C173.542 367.582 171.216 361.045 168.633 354.64C167.633 355.081 166.642 355.55 165.662 356.05L161.633 358.001C78.5601 396.184 -6.67286 307.173 32.7064 224.417L34.7113 220.419C35.0006 219.869 35.2786 219.314 35.5491 218.757C30.3526 216.55 25.0649 214.515 19.6917 212.662L12.4271 210.281C-4.14235 205.14 -4.14237 181.655 12.4271 176.513C20.2876 174.076 27.9776 171.253 35.4769 168.071L34.7874 166.656C-9.54255 82.4128 81.3372 -8.64825 165.413 35.7692C165.884 36.0179 166.358 36.2593 166.834 36.4939C170.145 28.7095 173.075 20.7233 175.598 12.5583ZM193.03 72.5036C166.186 123.882 124.381 166.178 73.2396 193.397C124.381 220.617 166.186 262.912 193.03 314.291C220.609 262.987 263.011 220.747 314.385 193.397C263.011 166.047 220.609 123.808 193.03 72.5036Z"/>
+        </svg>
+        <span class="logo-text" style="font-size: 11pt;">POWERUS</span>
+      </div>
+    </div>
+    
+    <div class="section">
+      <div class="section-header">
+        <span class="section-number">4</span>
+        RADIO LINK TEST (Props OFF)
+      </div>
+      <div class="section-content">
+        <div class="info-box">
+          <strong>What you're testing:</strong> The radio link connects the pilot's controller to the drone. Without a working radio link, the drone cannot be controlled. These tests verify the controller and drone can communicate.
+        </div>
+        
+        <ul class="checklist">
+          <li class="checklist-item">
+            <div class="checkbox"></div>
+            <div class="check-content">
+              <div class="check-title">Receiver Bound</div>
+              <div class="check-description">The receiver LED (on the drone) should show solid or slow blinking when the transmitter is on. If LED is fast-blinking or off, the receiver is not bound to the transmitter.</div>
+            </div>
+            <div class="check-result">
+              <div class="result-box"><div class="result-circle"></div> Pass</div>
+              <div class="result-box"><div class="result-circle"></div> Fail</div>
+            </div>
+          </li>
+          
+          <li class="checklist-item">
+            <div class="checkbox"></div>
+            <div class="check-content">
+              <div class="check-title">Stick Inputs Respond</div>
+              <div class="check-description">Looking at the OSD in goggles, move each control stick. The on-screen indicators should move corresponding to stick movements. All 4 channels (throttle, yaw, pitch, roll) must respond.</div>
+            </div>
+            <div class="check-result">
+              <div class="result-box"><div class="result-circle"></div> Pass</div>
+              <div class="result-box"><div class="result-circle"></div> Fail</div>
+            </div>
+          </li>
+          
+          <li class="checklist-item">
+            <div class="checkbox"></div>
+            <div class="check-content">
+              <div class="check-title">Arm Switch Functions</div>
+              <div class="check-description">The arm switch (usually a 2-position switch) should be configured. Flipping it should change the armed status shown in OSD. DO NOT actually arm yet - just verify the switch is recognized.</div>
+            </div>
+            <div class="check-result">
+              <div class="result-box"><div class="result-circle"></div> Pass</div>
+              <div class="result-box"><div class="result-circle"></div> Fail</div>
+            </div>
+          </li>
+          
+          <li class="checklist-item">
+            <div class="checkbox"></div>
+            <div class="check-content">
+              <div class="check-title">Failsafe Test</div>
+              <div class="check-description">Turn OFF the transmitter while drone is powered. The drone should NOT arm or fly away. It should either do nothing or show a "failsafe" warning. Turn transmitter back on - link should restore.</div>
+            </div>
+            <div class="check-result">
+              <div class="result-box"><div class="result-circle"></div> Pass</div>
+              <div class="result-box"><div class="result-circle"></div> Fail</div>
+            </div>
+          </li>
+          
+          <li class="checklist-item">
+            <div class="checkbox"></div>
+            <div class="check-content">
+              <div class="check-title">RSSI Displayed</div>
+              <div class="check-description">RSSI (Received Signal Strength Indicator) should show in the OSD. At close range it should read 90-100%. This tells the pilot how strong the control signal is during flight.</div>
+            </div>
+            <div class="check-result">
+              <div class="result-box"><div class="result-circle"></div> Pass</div>
+              <div class="result-box"><div class="result-circle"></div> Fail</div>
+            </div>
+          </li>
+        </ul>
+        
+        <div style="margin-top: 15px;">
+          <strong>Section 4 Notes:</strong>
+          <div class="notes-line" style="margin-top: 8px;"></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="section">
+      <div class="section-header">
+        <span class="section-number">5</span>
+        MOTOR TEST (Props OFF)
+      </div>
+      <div class="section-content">
+        <div class="warning-box">
+          <div class="warning-icon">⚠️</div>
+          <div class="warning-text">
+            <strong>SECURE THE DRONE</strong>
+            Hold the drone firmly or secure it to a test stand. Motors will spin at high speed. Keep fingers, hair, and loose clothing away from motors.
+          </div>
+        </div>
+        
+        <ul class="checklist">
+          <li class="checklist-item">
+            <div class="checkbox"></div>
+            <div class="check-content">
+              <div class="check-title">Arm the Drone</div>
+              <div class="check-description">With throttle at ZERO, flip the arm switch. Motors should begin spinning at idle speed. If motors don't spin, check that throttle is fully down and arm switch is configured.</div>
+            </div>
+            <div class="check-result">
+              <div class="result-box"><div class="result-circle"></div> Pass</div>
+              <div class="result-box"><div class="result-circle"></div> Fail</div>
+            </div>
+          </li>
+          
+          <li class="checklist-item">
+            <div class="checkbox"></div>
+            <div class="check-content">
+              <div class="check-title">Motor 1 (Front-Left) - CCW</div>
+              <div class="check-description">Increase throttle slightly. Motor 1 should spin counter-clockwise when viewed from above. Check for smooth operation, no vibration, grinding, or unusual noise.</div>
+            </div>
+            <div class="check-result">
+              <div class="result-box"><div class="result-circle"></div> Pass</div>
+              <div class="result-box"><div class="result-circle"></div> Fail</div>
+            </div>
+          </li>
+          
+          <li class="checklist-item">
+            <div class="checkbox"></div>
+            <div class="check-content">
+              <div class="check-title">Motor 2 (Front-Right) - CW</div>
+              <div class="check-description">Motor 2 should spin clockwise when viewed from above. Check for smooth operation, no vibration, grinding, or unusual noise.</div>
+            </div>
+            <div class="check-result">
+              <div class="result-box"><div class="result-circle"></div> Pass</div>
+              <div class="result-box"><div class="result-circle"></div> Fail</div>
+            </div>
+          </li>
+          
+          <li class="checklist-item">
+            <div class="checkbox"></div>
+            <div class="check-content">
+              <div class="check-title">Motor 3 (Rear-Left) - CW</div>
+              <div class="check-description">Motor 3 should spin clockwise when viewed from above. Check for smooth operation, no vibration, grinding, or unusual noise.</div>
+            </div>
+            <div class="check-result">
+              <div class="result-box"><div class="result-circle"></div> Pass</div>
+              <div class="result-box"><div class="result-circle"></div> Fail</div>
+            </div>
+          </li>
+          
+          <li class="checklist-item">
+            <div class="checkbox"></div>
+            <div class="check-content">
+              <div class="check-title">Motor 4 (Rear-Right) - CCW</div>
+              <div class="check-description">Motor 4 should spin counter-clockwise when viewed from above. Check for smooth operation, no vibration, grinding, or unusual noise.</div>
+            </div>
+            <div class="check-result">
+              <div class="result-box"><div class="result-circle"></div> Pass</div>
+              <div class="result-box"><div class="result-circle"></div> Fail</div>
+            </div>
+          </li>
+          
+          <li class="checklist-item">
+            <div class="checkbox"></div>
+            <div class="check-content">
+              <div class="check-title">Throttle Response</div>
+              <div class="check-description">Move throttle up and down. All motors should respond together, speeding up and slowing down in sync. Response should be immediate with no delay.</div>
+            </div>
+            <div class="check-result">
+              <div class="result-box"><div class="result-circle"></div> Pass</div>
+              <div class="result-box"><div class="result-circle"></div> Fail</div>
+            </div>
+          </li>
+          
+          <li class="checklist-item">
+            <div class="checkbox"></div>
+            <div class="check-content">
+              <div class="check-title">Disarm Test</div>
+              <div class="check-description">Flip arm switch to disarm. All motors should stop immediately. If motors continue spinning after disarm, there is a serious configuration problem - DO NOT FLY.</div>
+            </div>
+            <div class="check-result">
+              <div class="result-box"><div class="result-circle"></div> Pass</div>
+              <div class="result-box"><div class="result-circle"></div> Fail</div>
+            </div>
+          </li>
+        </ul>
+        
+        <div style="margin-top: 15px;">
+          <strong>Section 5 Notes:</strong>
+          <div class="notes-line" style="margin-top: 8px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- PAGE 4: Prop Install & Final -->
+  <div class="page">
+    <div class="header">
+      <div class="header-left">
+        <h1>Acceptance Test Procedure</h1>
+        <div class="subtitle">Page 4 of 4 - Propeller Installation & Summary</div>
+      </div>
+      <div class="logo-container">
+        <svg viewBox="0 0 386 387" xmlns="http://www.w3.org/2000/svg" style="fill: #0B0B0A; height: 30px;">
+          <path d="M175.598 12.5583C180.727 -4.04538 204.304 -4.23473 209.677 12.2868L212.135 19.4851C214.127 25.0427 216.309 30.5121 218.671 35.8864L219.07 35.6931C304.081 -9.22008 398.033 81.0899 354.432 166.905L353.584 168.701C359.931 171.367 366.406 173.783 372.997 175.931C388.732 181.06 389.713 202.46 375.941 209.618L372.997 210.863C366.385 213.018 359.889 215.44 353.522 218.117C353.825 218.774 354.141 219.426 354.47 220.074C398.034 305.815 308.539 397.507 222.813 358.058L218.726 356.088C218.103 355.77 217.475 355.465 216.843 355.171C214.201 361.493 211.808 367.943 209.677 374.508L208.462 377.402C201.429 390.94 180.407 389.805 175.598 374.237C173.542 367.582 171.216 361.045 168.633 354.64C167.633 355.081 166.642 355.55 165.662 356.05L161.633 358.001C78.5601 396.184 -6.67286 307.173 32.7064 224.417L34.7113 220.419C35.0006 219.869 35.2786 219.314 35.5491 218.757C30.3526 216.55 25.0649 214.515 19.6917 212.662L12.4271 210.281C-4.14235 205.14 -4.14237 181.655 12.4271 176.513C20.2876 174.076 27.9776 171.253 35.4769 168.071L34.7874 166.656C-9.54255 82.4128 81.3372 -8.64825 165.413 35.7692C165.884 36.0179 166.358 36.2593 166.834 36.4939C170.145 28.7095 173.075 20.7233 175.598 12.5583ZM193.03 72.5036C166.186 123.882 124.381 166.178 73.2396 193.397C124.381 220.617 166.186 262.912 193.03 314.291C220.609 262.987 263.011 220.747 314.385 193.397C263.011 166.047 220.609 123.808 193.03 72.5036Z"/>
+        </svg>
+        <span class="logo-text" style="font-size: 11pt;">POWERUS</span>
+      </div>
+    </div>
+    
+    <div class="section">
+      <div class="section-header">
+        <span class="section-number">6</span>
+        PROPELLER INSTALLATION
+      </div>
+      <div class="section-content">
+        <div class="warning-box">
+          <div class="warning-icon">⚠️</div>
+          <div class="warning-text">
+            <strong>BATTERY MUST BE DISCONNECTED</strong>
+            Before installing propellers, ensure the battery is unplugged. Never install or remove props while the drone is powered.
+          </div>
+        </div>
+        
+        <div class="info-box">
+          <strong>Propeller Direction:</strong> Props are marked CW (clockwise) or CCW (counter-clockwise). CW props go on CW motors (2 & 3). CCW props go on CCW motors (1 & 4). Wrong prop direction = drone won't fly.
+        </div>
+        
+        <ul class="checklist">
+          <li class="checklist-item">
+            <div class="checkbox"></div>
+            <div class="check-content">
+              <div class="check-title">Battery Disconnected</div>
+              <div class="check-description">Confirm battery is unplugged before handling propellers. This prevents accidental motor spin which can cause serious injury.</div>
+            </div>
+            <div class="check-result">
+              <div class="result-box"><div class="result-circle"></div> Pass</div>
+              <div class="result-box"><div class="result-circle"></div> Fail</div>
+            </div>
+          </li>
+          
+          <li class="checklist-item">
+            <div class="checkbox"></div>
+            <div class="check-content">
+              <div class="check-title">Props Undamaged</div>
+              <div class="check-description">Inspect each propeller for cracks, chips, or warping. Even small damage affects flight performance. Replace any damaged props.</div>
+            </div>
+            <div class="check-result">
+              <div class="result-box"><div class="result-circle"></div> Pass</div>
+              <div class="result-box"><div class="result-circle"></div> Fail</div>
+            </div>
+          </li>
+          
+          <li class="checklist-item">
+            <div class="checkbox"></div>
+            <div class="check-content">
+              <div class="check-title">Correct Prop Matching</div>
+              <div class="check-description">CCW props on Motors 1 & 4 (front-left, rear-right). CW props on Motors 2 & 3 (front-right, rear-left). Check markings on props match motor rotation.</div>
+            </div>
+            <div class="check-result">
+              <div class="result-box"><div class="result-circle"></div> Pass</div>
+              <div class="result-box"><div class="result-circle"></div> Fail</div>
+            </div>
+          </li>
+          
+          <li class="checklist-item">
+            <div class="checkbox"></div>
+            <div class="check-content">
+              <div class="check-title">Props Fully Seated</div>
+              <div class="check-description">Push each prop down firmly onto the motor shaft. There should be no gap between the prop and motor. Prop should not wobble or spin on the shaft.</div>
+            </div>
+            <div class="check-result">
+              <div class="result-box"><div class="result-circle"></div> Pass</div>
+              <div class="result-box"><div class="result-circle"></div> Fail</div>
+            </div>
+          </li>
+          
+          <li class="checklist-item">
+            <div class="checkbox"></div>
+            <div class="check-content">
+              <div class="check-title">Prop Nuts Tight</div>
+              <div class="check-description">If props use nuts (not press-fit), tighten each nut firmly. Props should not move or rotate on the shaft. Do not overtighten - snug is sufficient.</div>
+            </div>
+            <div class="check-result">
+              <div class="result-box"><div class="result-circle"></div> Pass</div>
+              <div class="result-box"><div class="result-circle"></div> Fail</div>
+            </div>
+          </li>
+          
+          <li class="checklist-item">
+            <div class="checkbox"></div>
+            <div class="check-content">
+              <div class="check-title">Props Clear Frame</div>
+              <div class="check-description">Spin each prop by hand. Props should rotate freely without hitting the frame, wires, or other props. Clear at least 5mm gap from any obstacle.</div>
+            </div>
+            <div class="check-result">
+              <div class="result-box"><div class="result-circle"></div> Pass</div>
+              <div class="result-box"><div class="result-circle"></div> Fail</div>
+            </div>
+          </li>
+        </ul>
+        
+        <div style="margin-top: 15px;">
+          <strong>Section 6 Notes:</strong>
+          <div class="notes-line" style="margin-top: 8px;"></div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Summary Section -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-number">✓</span>
+        TEST SUMMARY
+      </div>
+      <div class="section-content">
+        <div class="summary-grid">
+          <div class="summary-box">
+            <div class="summary-label">Total Items</div>
+            <div class="summary-value">31</div>
+          </div>
+          <div class="summary-box pass">
+            <div class="summary-label">Passed</div>
+            <div class="summary-value"></div>
+          </div>
+          <div class="summary-box fail">
+            <div class="summary-label">Failed</div>
+            <div class="summary-value"></div>
+          </div>
+        </div>
+        
+        <div class="final-result">
+          <div class="result-title">FINAL DETERMINATION</div>
+          <div class="result-options">
+            <div class="result-option">
+              <div class="result-checkbox"></div>
+              <span style="color: #27ae60;">PASS - Ready for Delivery</span>
+            </div>
+            <div class="result-option">
+              <div class="result-checkbox"></div>
+              <span style="color: #e74c3c;">FAIL - Requires Attention</span>
+            </div>
+          </div>
+        </div>
+        
+        <div style="margin-top: 20px;">
+          <strong>Issues Requiring Attention:</strong>
+          <div class="notes-line" style="margin-top: 8px;"></div>
+          <div class="notes-line" style="margin-top: 8px;"></div>
+          <div class="notes-line" style="margin-top: 8px;"></div>
+        </div>
+        
+        <div class="signature-section">
+          <div class="signature-box">
+            <div class="signature-line"></div>
+            <div class="signature-label">Inspector Signature & Date</div>
+          </div>
+          <div class="signature-box">
+            <div class="signature-line"></div>
+            <div class="signature-label">Supervisor Review (if any failures)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div style="text-align: center; margin-top: 20px; font-size: 9pt; color: #666;">
+      <strong>POWERUS</strong> | Acceptance Test Procedure v1.0 | Confidential
+    </div>
+  </div>
+</body>
+</html>

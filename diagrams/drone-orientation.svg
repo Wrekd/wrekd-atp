@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <style>
+    .frame { fill: none; stroke: #333; stroke-width: 3; }
+    .motor { fill: #444; stroke: #222; stroke-width: 2; }
+    .label { font-family: Arial, sans-serif; font-size: 12px; fill: #333; }
+    .label-bold { font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #333; }
+    .arrow { fill: none; stroke: #666; stroke-width: 2; }
+    .direction { font-family: Arial, sans-serif; font-size: 10px; fill: #666; }
+    .cw { fill: none; stroke: #e74c3c; stroke-width: 2; }
+    .ccw { fill: none; stroke: #3498db; stroke-width: 2; }
+  </style>
+  
+  <!-- Title -->
+  <text x="200" y="25" text-anchor="middle" class="label-bold" style="font-size: 16px;">DRONE ORIENTATION - TOP VIEW</text>
+  
+  <!-- Center body -->
+  <rect x="160" y="120" width="80" height="160" rx="8" class="frame" fill="#f5f5f5"/>
+  
+  <!-- Arms -->
+  <line x1="175" y1="135" x2="80" y2="60" class="frame"/>
+  <line x1="225" y1="135" x2="320" y2="60" class="frame"/>
+  <line x1="175" y1="265" x2="80" y2="340" class="frame"/>
+  <line x1="225" y1="265" x2="320" y2="340" class="frame"/>
+  
+  <!-- Motors -->
+  <circle cx="65" cy="50" r="25" class="motor"/>
+  <circle cx="335" cy="50" r="25" class="motor"/>
+  <circle cx="65" cy="350" r="25" class="motor"/>
+  <circle cx="335" cy="350" r="25" class="motor"/>
+  
+  <!-- Motor numbers -->
+  <text x="65" y="55" text-anchor="middle" class="label-bold" fill="white">1</text>
+  <text x="335" y="55" text-anchor="middle" class="label-bold" fill="white">2</text>
+  <text x="65" y="355" text-anchor="middle" class="label-bold" fill="white">3</text>
+  <text x="335" y="355" text-anchor="middle" class="label-bold" fill="white">4</text>
+  
+  <!-- Rotation arrows -->
+  <path d="M 50 35 A 20 20 0 1 0 80 35" class="ccw" marker-end="url(#arrowBlue)"/>
+  <path d="M 320 35 A 20 20 0 1 1 350 35" class="cw" marker-end="url(#arrowRed)"/>
+  <path d="M 50 335 A 20 20 0 1 1 80 335" class="cw" marker-end="url(#arrowRed)"/>
+  <path d="M 320 335 A 20 20 0 1 0 350 335" class="ccw" marker-end="url(#arrowBlue)"/>
+  
+  <!-- Arrow markers -->
+  <defs>
+    <marker id="arrowRed" markerWidth="10" markerHeight="10" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#e74c3c"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#3498db"/>
+    </marker>
+  </defs>
+  
+  <!-- FRONT indicator -->
+  <path d="M 200 90 L 185 110 L 215 110 Z" fill="#27ae60"/>
+  <text x="200" y="80" text-anchor="middle" class="label-bold" fill="#27ae60">FRONT</text>
+  <text x="200" y="105" text-anchor="middle" style="font-size: 10px; fill: white;">▼</text>
+  
+  <!-- REAR indicator -->
+  <text x="200" y="320" text-anchor="middle" class="label" fill="#666">REAR</text>
+  
+  <!-- Legend -->
+  <rect x="20" y="380" width="15" height="3" fill="#e74c3c"/>
+  <text x="40" y="385" class="direction">CW (Clockwise)</text>
+  <rect x="130" y="380" width="15" height="3" fill="#3498db"/>
+  <text x="150" y="385" class="direction">CCW (Counter-clockwise)</text>
+  
+  <!-- Camera position -->
+  <rect x="185" y="115" width="30" height="15" rx="3" fill="#333"/>
+  <text x="200" y="126" text-anchor="middle" style="font-size: 8px; fill: white;">CAM</text>
+  
+  <!-- Antenna position -->
+  <circle cx="200" cy="295" r="5" fill="#f39c12"/>
+  <line x1="200" y1="295" x2="200" y2="330" stroke="#333" stroke-width="2"/>
+  <text x="220" y="315" class="direction">Antenna</text>
+</svg>
