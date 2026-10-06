@@ -18,6 +18,27 @@
       --border: #dfe6e9;
     }
     
+    /* Brand Themes */
+    [data-brand="powerus"] {
+      --primary: #0a2540;
+      --accent: #00d4aa;
+    }
+    
+    [data-brand="wrekd"] {
+      --primary: #1a1a2e;
+      --accent: #e94560;
+    }
+    
+    [data-brand="agile-autonomy"] {
+      --primary: #1c2833;
+      --accent: #f39c12;
+    }
+    
+    [data-brand="tandem"] {
+      --primary: #2c3e50;
+      --accent: #3498db;
+    }
+    
     * {
       box-sizing: border-box;
       margin: 0;
@@ -37,8 +58,30 @@
       margin: 0 auto;
     }
     
+    .brand-selector {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 10px;
+      gap: 10px;
+      align-items: center;
+    }
+    
+    .brand-selector label {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    
+    .brand-selector select {
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.9rem;
+      background: white;
+      cursor: pointer;
+    }
+    
     header {
-      background: var(--primary);
+      background: linear-gradient(135deg, var(--primary) 0%, color-mix(in srgb, var(--primary) 80%, black) 100%);
       color: white;
       padding: 30px;
       border-radius: 12px 12px 0 0;
@@ -59,9 +102,16 @@
     }
     
     .logo {
-      font-size: 2.5rem;
+      font-size: 2rem;
       font-weight: 900;
       color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+    
+    .logo-img {
+      max-height: 50px;
+      max-width: 180px;
     }
     
     .meta-section {
@@ -87,7 +137,7 @@
       font-weight: 600;
     }
     
-    .meta-field input {
+    .meta-field input, .meta-field select {
       padding: 10px 12px;
       border: 1px solid var(--border);
       border-radius: 6px;
@@ -95,7 +145,7 @@
       transition: border-color 0.2s;
     }
     
-    .meta-field input:focus {
+    .meta-field input:focus, .meta-field select:focus {
       outline: none;
       border-color: var(--accent);
     }
@@ -107,7 +157,7 @@
     
     .section-header {
       padding: 16px 30px;
-      background: linear-gradient(135deg, var(--primary) 0%, #16213e 100%);
+      background: linear-gradient(135deg, var(--primary) 0%, color-mix(in srgb, var(--primary) 80%, black) 100%);
       color: white;
       display: flex;
       justify-content: space-between;
@@ -349,13 +399,13 @@
       font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
-      box-shadow: 0 4px 15px rgba(233, 69, 96, 0.4);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
       transition: transform 0.2s, box-shadow 0.2s;
     }
     
     .print-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(233, 69, 96, 0.5);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
     }
     
     @media print {
@@ -364,7 +414,7 @@
         background: white;
       }
       
-      .print-btn {
+      .print-btn, .brand-selector {
         display: none;
       }
       
@@ -398,20 +448,30 @@
     }
   </style>
 </head>
-<body>
+<body data-brand="powerus">
   <div class="container">
+    <div class="brand-selector">
+      <label for="brand-select">Brand:</label>
+      <select id="brand-select" onchange="changeBrand(this.value)">
+        <option value="powerus">Powerus</option>
+        <option value="tandem">Tandem Defense</option>
+        <option value="agile-autonomy">Agile Autonomy</option>
+        <option value="wrekd">WREKD</option>
+      </select>
+    </div>
+    
     <header>
       <div>
         <h1>Acceptance Test Procedure</h1>
         <div class="subtitle">FPV Drone Pre-Delivery Verification</div>
       </div>
-      <div class="logo">WREKD</div>
+      <div class="logo" id="brand-logo">POWERUS</div>
     </header>
     
     <div class="meta-section">
       <div class="meta-field">
         <label>Unit Serial #</label>
-        <input type="text" id="serial" placeholder="e.g., WRK-2026-0001">
+        <input type="text" id="serial" placeholder="e.g., PUS-2026-0001">
       </div>
       <div class="meta-field">
         <label>Inspector Name</label>
@@ -991,8 +1051,59 @@
   <button class="print-btn" onclick="window.print()">🖨️ Print ATP</button>
   
   <script>
+    // Brand configurations
+    const brands = {
+      powerus: {
+        name: 'POWERUS',
+        serialPrefix: 'PUS',
+        logo: null // Text logo
+      },
+      wrekd: {
+        name: 'WREKD',
+        serialPrefix: 'WRK',
+        logo: null
+      },
+      'agile-autonomy': {
+        name: 'AGILE AUTONOMY',
+        serialPrefix: 'AA',
+        logo: null
+      },
+      tandem: {
+        name: 'TANDEM DEFENSE',
+        serialPrefix: 'TD',
+        logo: null
+      }
+    };
+    
+    // Get brand from URL or default to powerus
+    function getBrandFromURL() {
+      const params = new URLSearchParams(window.location.search);
+      const brand = params.get('brand');
+      return brands[brand] ? brand : 'powerus';
+    }
+    
+    // Change brand
+    function changeBrand(brandKey) {
+      const brand = brands[brandKey];
+      if (!brand) return;
+      
+      document.body.setAttribute('data-brand', brandKey);
+      document.getElementById('brand-logo').textContent = brand.name;
+      document.getElementById('brand-select').value = brandKey;
+      document.getElementById('serial').placeholder = `e.g., ${brand.serialPrefix}-2026-0001`;
+      
+      // Update URL without reload
+      const url = new URL(window.location);
+      url.searchParams.set('brand', brandKey);
+      window.history.replaceState({}, '', url);
+    }
+    
     // Set today's date
     document.getElementById('date').valueAsDate = new Date();
+    
+    // Initialize brand from URL
+    const initialBrand = getBrandFromURL();
+    changeBrand(initialBrand);
     
     // Handle pass/fail button clicks
     document.querySelectorAll('.btn-check').forEach(btn => {
