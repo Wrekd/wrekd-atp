@@ -129,38 +129,33 @@
     
     .meta-section {
       background: var(--card);
-      padding: 24px 30px;
+      padding: 16px 30px;
       border-bottom: 1px solid var(--border);
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 16px;
+      display: none;
     }
     
-    .meta-field {
+    .meta-display {
       display: flex;
-      flex-direction: column;
-      gap: 4px;
+      flex-wrap: wrap;
+      gap: 24px;
     }
     
-    .meta-field label {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+    .meta-item {
+      font-size: 0.9rem;
+    }
+    
+    .meta-label {
       color: var(--muted);
       font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.5px;
+      margin-right: 6px;
     }
     
-    .meta-field input, .meta-field select {
-      padding: 10px 12px;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      font-size: 1rem;
-      transition: border-color 0.2s;
-    }
-    
-    .meta-field input:focus, .meta-field select:focus {
-      outline: none;
-      border-color: var(--accent);
+    .meta-value {
+      color: var(--text);
+      font-weight: 500;
     }
     
     .test-section {
@@ -604,23 +599,9 @@
       </div>
     </header>
     
-    <div class="meta-section">
-      <div class="meta-field">
-        <label>Unit Serial #</label>
-        <input type="text" id="serial" placeholder="e.g., PUS-2026-0001">
-      </div>
-      <div class="meta-field">
-        <label>Inspector Name</label>
-        <input type="text" id="inspector" placeholder="Enter name">
-      </div>
-      <div class="meta-field">
-        <label>Date</label>
-        <input type="date" id="date">
-      </div>
-      <div class="meta-field">
-        <label>Build/Order Reference</label>
-        <input type="text" id="reference" placeholder="e.g., ORD-12345">
-      </div>
+    <div class="meta-section" id="meta-section">
+      <!-- Auto-populated from URL params: ?serial=X&inspector=X&ref=X -->
+      <!-- Hidden by default, shown only if params present -->
     </div>
     
     <!-- Section 1: Unboxing Inspection -->
@@ -1225,7 +1206,7 @@
       
       document.body.setAttribute('data-brand', brandKey);
       document.getElementById('brand-select').value = brandKey;
-      document.getElementById('serial').placeholder = `e.g., ${brand.serialPrefix}-2026-0001`;
+      // Serial prefix available: brand.serialPrefix
       
       // Handle logo display
       const logoEl = document.getElementById('brand-logo');
@@ -1247,12 +1228,37 @@
       window.history.replaceState({}, '', url);
     }
     
-    // Set today's date
-    document.getElementById('date').valueAsDate = new Date();
-    
     // Initialize brand from URL
     const initialBrand = getBrandFromURL();
     changeBrand(initialBrand);
+    
+    // Auto-fill meta from URL params
+    function initMeta() {
+      const params = new URLSearchParams(window.location.search);
+      const serial = params.get('serial');
+      const inspector = params.get('inspector');
+      const ref = params.get('ref');
+      const date = params.get('date') || new Date().toLocaleDateString();
+      
+      const metaSection = document.getElementById('meta-section');
+      
+      // Only show meta if at least one param is present
+      if (serial || inspector || ref) {
+        metaSection.innerHTML = `
+          <div class="meta-display">
+            ${serial ? `<div class="meta-item"><span class="meta-label">Serial:</span> <span class="meta-value">${serial}</span></div>` : ''}
+            ${inspector ? `<div class="meta-item"><span class="meta-label">Inspector:</span> <span class="meta-value">${inspector}</span></div>` : ''}
+            ${ref ? `<div class="meta-item"><span class="meta-label">Reference:</span> <span class="meta-value">${ref}</span></div>` : ''}
+            <div class="meta-item"><span class="meta-label">Date:</span> <span class="meta-value">${date}</span></div>
+          </div>
+        `;
+        metaSection.style.display = 'block';
+      } else {
+        metaSection.style.display = 'none';
+      }
+    }
+    
+    initMeta();
     
     // Handle pass/fail button clicks
     document.querySelectorAll('.btn-check').forEach(btn => {
