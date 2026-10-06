@@ -422,13 +422,25 @@
     }
     
     @media print {
+      /* Reset to light theme for printing */
+      :root, [data-brand] {
+        --primary: #1a1a2e !important;
+        --accent: #1a1a2e !important;
+        --bg: #ffffff !important;
+        --card: #ffffff !important;
+        --text: #000000 !important;
+        --muted: #666666 !important;
+        --border: #cccccc !important;
+      }
+      
       body {
         padding: 0;
-        background: white;
+        background: white !important;
+        color: black !important;
       }
       
       .print-btn, .brand-selector {
-        display: none;
+        display: none !important;
       }
       
       .container {
@@ -437,18 +449,124 @@
       
       header {
         border-radius: 0;
+        background: #1a1a2e !important;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
+      }
+      
+      header, header h1, header .subtitle {
+        color: white !important;
+      }
+      
+      .logo svg {
+        fill: white !important;
+      }
+      
+      #brand-text {
+        color: white !important;
       }
       
       .section-header {
+        background: #1a1a2e !important;
+        color: white !important;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
       }
       
-      .btn-check {
+      .section-number {
+        background: #e94560 !important;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
+      }
+      
+      .meta-section, .test-section, .summary-section {
+        background: white !important;
+      }
+      
+      .meta-field input, .notes-input {
+        border: 1px solid #ccc !important;
+        background: white !important;
+        color: black !important;
+      }
+      
+      .test-item {
+        border-bottom: 1px solid #ccc !important;
+      }
+      
+      .test-description {
+        color: black !important;
+      }
+      
+      .btn-check {
+        border: 2px solid #ccc !important;
+        background: white !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      
+      .btn-check.pass {
+        background: #00b894 !important;
+        border-color: #00b894 !important;
+        color: white !important;
+      }
+      
+      .btn-check.fail {
+        background: #d63031 !important;
+        border-color: #d63031 !important;
+        color: white !important;
+      }
+      
+      .summary-card {
+        background: #f8f9fa !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      
+      .summary-number, .summary-label {
+        color: black !important;
+      }
+      
+      .summary-card.passed .summary-number {
+        color: #00b894 !important;
+      }
+      
+      .summary-card.failed .summary-number {
+        color: #d63031 !important;
+      }
+      
+      .final-result {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      
+      .final-result.pass {
+        background: #00b894 !important;
+        color: white !important;
+      }
+      
+      .final-result.fail {
+        background: #d63031 !important;
+        color: white !important;
+      }
+      
+      .final-result.pending {
+        background: #f8f9fa !important;
+        color: #666 !important;
+      }
+      
+      .warning-banner {
+        background: #fdcb6e !important;
+        color: #1a1a2e !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      
+      .signature-line {
+        border-bottom: 2px solid black !important;
+      }
+      
+      .signature-label {
+        color: #666 !important;
       }
       
       .summary-section {
