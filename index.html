@@ -20,8 +20,13 @@
     
     /* Brand Themes */
     [data-brand="powerus"] {
-      --primary: #0a2540;
-      --accent: #00d4aa;
+      --primary: #0B0B0A;
+      --accent: #FDFAF3;
+      --bg: #121211;
+      --card: #1a1a19;
+      --text: #FDFAF3;
+      --muted: #8D8779;
+      --border: #2a2a28;
     }
     
     [data-brand="wrekd"] {
@@ -107,6 +112,14 @@
       color: var(--accent);
       text-transform: uppercase;
       letter-spacing: 2px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .logo svg {
+      height: 50px;
+      width: auto;
     }
     
     .logo-img {
@@ -465,7 +478,12 @@
         <h1>Acceptance Test Procedure</h1>
         <div class="subtitle">FPV Drone Pre-Delivery Verification</div>
       </div>
-      <div class="logo" id="brand-logo">POWERUS</div>
+      <div class="logo" id="brand-logo">
+        <svg id="powerus-svg" viewBox="0 0 386 387" xmlns="http://www.w3.org/2000/svg" style="height: 50px; width: auto; fill: #FDFAF3;">
+          <path d="M175.598 12.5583C180.727 -4.04538 204.304 -4.23473 209.677 12.2868L212.135 19.4851C214.127 25.0427 216.309 30.5121 218.671 35.8864L219.07 35.6931C304.081 -9.22008 398.033 81.0899 354.432 166.905L353.584 168.701C359.931 171.367 366.406 173.783 372.997 175.931C388.732 181.06 389.713 202.46 375.941 209.618L372.997 210.863C366.385 213.018 359.889 215.44 353.522 218.117C353.825 218.774 354.141 219.426 354.47 220.074C398.034 305.815 308.539 397.507 222.813 358.058L218.726 356.088C218.103 355.77 217.475 355.465 216.843 355.171C214.201 361.493 211.808 367.943 209.677 374.508L208.462 377.402C201.429 390.94 180.407 389.805 175.598 374.237C173.542 367.582 171.216 361.045 168.633 354.64C167.633 355.081 166.642 355.55 165.662 356.05L161.633 358.001C78.5601 396.184 -6.67286 307.173 32.7064 224.417L34.7113 220.419C35.0006 219.869 35.2786 219.314 35.5491 218.757C30.3526 216.55 25.0649 214.515 19.6917 212.662L12.4271 210.281C-4.14235 205.14 -4.14237 181.655 12.4271 176.513C20.2876 174.076 27.9776 171.253 35.4769 168.071L34.7874 166.656C-9.54255 82.4128 81.3372 -8.64825 165.413 35.7692C165.884 36.0179 166.358 36.2593 166.834 36.4939C170.145 28.7095 173.075 20.7233 175.598 12.5583ZM318.787 236C284.596 257.08 255.691 286.06 234.675 320.334C235.275 320.59 235.872 320.868 236.465 321.171C289.648 348.299 346.697 291.137 319.622 237.848C319.309 237.231 319.032 236.614 318.787 236ZM70.137 236.82C69.9012 237.452 69.6211 238.082 69.2913 238.709C41.378 291.77 97.9885 346.604 147.923 321.133C149.02 320.573 150.123 320.09 151.231 319.674C131.075 286.063 103.248 257.612 70.137 236.82ZM193.03 72.5036C166.186 123.882 124.381 166.178 73.2396 193.397C124.381 220.617 166.186 262.912 193.03 314.291C220.609 262.987 263.011 220.747 314.385 193.397C263.011 166.047 220.609 123.808 193.03 72.5036ZM319.584 149.131C345.006 99.0967 290.281 42.3738 237.325 70.3425C237.269 70.3719 237.211 70.3984 237.155 70.4255C257.948 102.986 285.491 130.613 318.055 151.428C318.59 150.646 319.099 149.879 319.584 149.131ZM151.28 67.1036C150.188 66.6292 149.097 66.2284 148.009 65.9019C97.9439 40.1649 41.4112 95.5196 69.3403 148.138C69.6068 148.642 69.8557 149.145 70.0907 149.648C103.329 129.447 131.457 101.632 151.28 67.1036Z"/>
+        </svg>
+        <span id="brand-text" style="display: none;">POWERUS</span>
+      </div>
     </header>
     
     <div class="meta-section">
@@ -1088,9 +1106,22 @@
       if (!brand) return;
       
       document.body.setAttribute('data-brand', brandKey);
-      document.getElementById('brand-logo').textContent = brand.name;
       document.getElementById('brand-select').value = brandKey;
       document.getElementById('serial').placeholder = `e.g., ${brand.serialPrefix}-2026-0001`;
+      
+      // Handle logo display
+      const logoEl = document.getElementById('brand-logo');
+      const svgEl = document.getElementById('powerus-svg');
+      const textEl = document.getElementById('brand-text');
+      
+      if (brandKey === 'powerus') {
+        svgEl.style.display = 'block';
+        textEl.style.display = 'none';
+      } else {
+        svgEl.style.display = 'none';
+        textEl.style.display = 'block';
+        textEl.textContent = brand.name;
+      }
       
       // Update URL without reload
       const url = new URL(window.location);
